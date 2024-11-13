@@ -104,4 +104,24 @@ async function deleteUser(req, res) {
     }
 }
 
-export default {createUser, editUser, showUser, deleteUser, showAllUser}
+async function deleteAllUser(req, res) {
+    try {
+        const users = await modelUser.findAll();
+
+        if (users && users.length > 0) {
+
+            for (const user of users) {
+                await user.destroy();
+            }
+            return res.status(200).send({ msg: 'Usuários deletados!' });
+        } else {
+            return res.status(404).send({ msg: 'Nenhum usuário encontrado para deletar.' });
+        }
+    } catch (error) {
+        console.error('Erro ao deletar Usuários:', error);
+        return res.status(500).send({ msg: 'Erro ao deletar usuários.' });
+    }
+}
+
+
+export default {createUser, editUser, showUser, deleteUser, showAllUser, deleteAllUser}
