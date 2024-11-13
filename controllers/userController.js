@@ -47,7 +47,7 @@ async function editUser(req, res) {
     }
 }
 
-async function showUser(req, res) {
+async function showAllUser(req, res) {
     try {
         
         let user = modelUser.findAll()
@@ -64,6 +64,25 @@ async function showUser(req, res) {
         console.error('Erro ao mostrar Usuários', error)
     }
 }
+
+async function showUser(req, res) {
+    try {
+
+        let user = modelUser.findByPk(req.params.id)
+
+        if(user){
+            user.then((dados)=>{
+                res.status(200).send({msg:dados})
+            },(error)=>{
+                onsole.error('Erro ao mostrar Usuário', error)
+            })
+        }
+
+    } catch (error) {
+        console.error('Erro ao mostrar Usuário', error)
+    }
+}
+
 
 async function deleteUser(req, res) {
     try {
@@ -85,4 +104,4 @@ async function deleteUser(req, res) {
     }
 }
 
-export default {createUser, editUser, showUser, deleteUser}
+export default {createUser, editUser, showUser, deleteUser, showAllUser}

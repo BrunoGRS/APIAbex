@@ -6,3 +6,4 @@
 - Sequelize
 - Mysql
 - Insomnia ( para teste da API )
+
