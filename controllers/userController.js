@@ -47,6 +47,31 @@ async function editUser(req, res) {
     }
 }
 
+async function editMoreUser(req, res) {
+    try {
+            
+            const users = {
+                IdUsuario: req.body.IdUsuario,
+                NomeUsuario: req.body.NomeUsuario,
+                emailUsuario: req.body.emailUsuario,
+                senhaUsuario: req.body.senhaUsuario
+            }
+
+            if(!modelUser.sync().isPendig){
+                await modelUser.sync()
+            }
+    
+            for(const user of users){
+                modelUser.create(user)
+            }
+            
+            res.status(201).send({msg:'Usuário criado com sucesso!'})
+
+    } catch (error) {
+        console.error('Erro ao criar Usuário', error)
+    }
+}
+
 async function showAllUser(req, res) {
     try {
         
@@ -124,4 +149,4 @@ async function deleteAllUser(req, res) {
 }
 
 
-export default {createUser, editUser, showUser, deleteUser, showAllUser, deleteAllUser}
+export default {createUser, editUser, showUser, deleteUser, showAllUser, deleteAllUser, editMoreUser}
